@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+	<select id="getData" parameterType="int" resultType="com.gura.spring02.member.dto.MemberDto" >
+		SELECT num, name, addr <!-- result type -->
+		FROM member
+		WHERE num = #{num} <!-- parameter type-->
+	</select> <!-- 얘는 리턴하는 정보가 하나기 떄문에 session.selectOne("member.getData", 3) 이런 식으로 사용하고 MemberDto type 리턴 -->
+
+	<update id="update" parameterType="com.gura.spring02.member.dto.MemberDto"> <!-- 수정할 회원 한명의 3가지 정보를 가져와야하니까 MemberDto type가져와야함 -->
+		<!--  UPDATE member
+		SET name =?, addr=?
+		WHERE num = ?-->
+		UPDATE member
+		SET name = #{name}, addr= #{addr}
+		WHERE num = #{num}
+	</update>
+
+	<delete id="delete" parameterType="int"> <!-- 파라미터로 num을 가져와서 binding할거기때문에 int type-->
+		<!-- 회원 한명의 정보를 삭제 -->
+		DELETE FROM member
+		WHERE num = #{num}
+	</delete>
+	
+	<select id="getList" resultType="com.gura.spring02.member.dto.MemberDto">
+						<!-- result값을 어디에 담을 것인지 -->
+						<!-- select된 row하나를 어떤 type에 담을지 결정하는 것이 resultType이다 -->
+						<!-- resultType이 바로 MemberDaoImpl에서 getList의 generic이다. List<MemberDto> getList() -->
+		SELECT num, name, addr
+		FROM member
+		ORDER BY num ASC
+		<!-- select된 row 하나하나를 어떤 객체에 담을지 정해주어야함. 이 경우에는 MemberDto에 담고 list에 add, add 이런식으로 했었지만 mybatis에서는 선언만 하면
+		자동으로!! 칼럼명하고 디티오의 필드명만 같으면 됨.-->
+	</select>
+	
+	<insert id="insert" parameterType="com.gura.spring02.member.dto.MemberDto">
+							<!-- (MemberDaoImpl에서) 파라미터로 어떤 타입이 전달되었는지 full package명 다 적어주기 -->
+		INSERT INTO member
+		(num, name, addr)
+		VALUES(member_seq.NEXTVAL, #{name}, #{addr})
+		<!-- MemberDto의 필드명과 같으면 자동으로 binding 된다. like 첫번쨰 물음표에다가 뭐, 두번째 물음표에다가 뭐~ 이런거-->
+	</insert>
+										
+</mapper>

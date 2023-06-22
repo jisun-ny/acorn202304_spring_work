@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mapper를 만들고 Configureation.xml 문서에 mapper의 위치를 명시해줘야함. -->
+<mapper namespace="guest">
+
+
+	<select id="getData"  parameterType="int" resultType="com.gura.spring02.guest.dto.GuestDto">
+		SELECT num, writer, content, pwd, regdate <!-- select된 row를 어떤 타입으로 담을지 결정하는 것이 resultType -->
+		FROM board_guest
+		WHERE num = #{num}
+		<!-- 얘는 프라이머리값으로 받느거기떄문에 select된 row가 하나임! selectone으로  받아서 사용하자 그럼 리턴타입은 =resulttype (GuestDto)-->
+		<!-- select list인 경우에는 리턴타입은 list 이고 resulttype이 제너릭이 되는 것임!!!!! -->
+	</select>
+	
+	<update id="update" parameterType="guestDto"> <!-- 별칭을 Configuration.xml에 설정해 놓고 사용 가능. -->
+		UPDATE board_guest
+		SET writer = #{writer}, content = #{content}
+		WHERE num = #{num} AND pwd = #{pwd}
+	</update>
+
+	<delete id="delete" parameterType="guestDto">
+		DELETE FROM board_guest
+		WHERE num = #{num} AND pwd = #{pwd}
+	</delete>
+
+	<insert id="insert" parameterType="guestDto">
+		INSERT INTO board_guest
+		(num, writer, content, pwd, regdate)
+		VALUES (board_guest_seq.NEXTVAL, #{writer}, #{content}, #{pwd}, SYSDATE)
+		<!-- jdbc였다면 ? 임. 또한 ; 사용 안됨!!!!!!!! -->
+	</insert>
+	
+	<select id="getList" resultType="guestDto">
+		SELECT num, writer, content, pwd, regdate
+		FROM board_guest
+		ORDER BY num ASC
+	</select>
+											
+</mapper>
