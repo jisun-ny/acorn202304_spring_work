@@ -41,6 +41,7 @@
 				단, /users/loginform, /users/login 요청은 exclude(제외) 해줘야한다.안그러면 로그인도 못함!
 			 -->
 			<mapping path="/users/*"/> 
+			<mapping path="/file/*"/> 
 			<exclude-mapping path="/users/loginform"/>
 			<exclude-mapping path="/users/login"/>
 			<beans:ref bean="loginInterceptor"/>

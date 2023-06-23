@@ -1,13 +1,18 @@
 package com.gura.spring03.file.controller;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.gura.spring03.file.dto.FileDto;
 
 /*
  *   [ spring mvc 파일 업로드 처리 ]
@@ -20,6 +25,85 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class FileController {
+	//이미지 업로드 요청 처리
+	@ResponseBody //제이슨을 리턴.
+	@RequestMapping(method = RequestMethod.POST, value="/image/upload")
+	public Map<String, Object> imageUpload(MultipartFile image, HttpServletRequest request) {
+		// 업로드 처리를 하고 {"imagePath" : "/resource/upload/xxxxxx.jpg} 이런 제이슨 문자열을 응답할 것이다. (제이슨 문자열을 리턴받으려고 map을 사용하고 @ResponseBody 해준것이다..)
+		// 								이 주소를 활용해서 <img src=" ">에 넣어줌
+		
+		//1. 원본 파일명(String type으로 얻어 내 수 있다)
+	      String orgFileName=image.getOriginalFilename();
+	    
+	      
+	      // webapp/resources/upload 폴더 까지의 실제 경로(서버의 파일시스템 상에서의 경로)
+	      String realPath=request.getServletContext().getRealPath("/resources/upload");
+	      //저장할 파일의 상세 경로
+	      String filePath=realPath+File.separator;
+	      //디렉토리를 만들 파일 객체 생성
+	      File upload=new File(filePath);
+	      if(!upload.exists()) {//만일 디렉토리가 존재하지 않으면 
+	         upload.mkdir(); //만들어 준다.
+	      }
+	      //저장할 파일 명을 구성한다.
+	      String saveFileName=
+	            System.currentTimeMillis()+orgFileName;
+	      // System.currentTimeMillis()을 붙이는 이유는 파일명이 겹칠 수 있으니까 순간순간 계속 달라지는 숫자를 원본 파일명 앞에 붙여서 파일명을 겹치지 않게 해줌
+	      try {
+	         //3. 임시 폴더에 저장된 업로드된 파일을 원하는곳에 원하는 이름으로 이동시키기(전송하기)
+	    	  image.transferTo(new File(filePath+saveFileName)); //옮길 목적지와 저장된 파일명을 가지고 있는 file객체를 넣어줘서 이동시킴
+	         System.out.println(filePath+saveFileName); //콘솔에서 파일 경로와 파일 이름을 한번에 확인할 수 있다.
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      
+	     // Map 객체에 
+	      Map<String, Object> map = new HashMap<>();
+	      //"imagePath"라는 키값으로 업로드된 이미지를 요청할 수 있는 경로를 담아서
+	      map.put("imagePath", "/resources/upload/"+saveFileName);
+	      //리턴해주면 {"imagePath" : "xxx"} 형식의 json 문자열이 응답된다.
+	      return map;
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/file/upload2")
+	public String upload2(FileDto dto, HttpServletRequest request) {
+		//FileDto 필드에 MultipartFile 객체의 참조값이 들어있다.
+		
+		//FileDto객체에 들어있는 MultipartFile객체를 이용해서 파일 업로드 관련 처리를 한다.
+		MultipartFile myFile = dto.getMyFile();
+		
+		//하고 밑에 내용은 동일
+		//1. 원본 파일명(String type으로 얻어 내 수 있다)
+	      String orgFileName=myFile.getOriginalFilename();
+	      //2. 파일의 크기(long type으로 얻어 내 수 있다)
+	      long fileSize=myFile.getSize();
+	      
+	      // webapp/resources/upload 폴더 까지의 실제 경로(서버의 파일시스템 상에서의 경로)
+	      String realPath=request.getServletContext().getRealPath("/resources/upload");
+	      //저장할 파일의 상세 경로
+	      String filePath=realPath+File.separator;
+	      //디렉토리를 만들 파일 객체 생성
+	      File upload=new File(filePath);
+	      if(!upload.exists()) {//만일 디렉토리가 존재하지 않으면 
+	         upload.mkdir(); //만들어 준다.
+	      }
+	      //저장할 파일 명을 구성한다.
+	      String saveFileName=
+	            System.currentTimeMillis()+orgFileName;
+	      // System.currentTimeMillis()을 붙이는 이유는 파일명이 겹칠 수 있으니까 순간순간 계속 달라지는 숫자를 원본 파일명 앞에 붙여서 파일명을 겹치지 않게 해줌
+	      try {
+	         //3. 임시 폴더에 저장된 업로드된 파일을 원하는곳에 원하는 이름으로 이동시키기(전송하기)
+	         myFile.transferTo(new File(filePath+saveFileName)); //옮길 목적지와 저장된 파일명을 가지고 있는 file객체를 넣어줘서 이동시킴
+	         System.out.println(filePath+saveFileName); //콘솔에서 파일 경로와 파일 이름을 한번에 확인할 수 있다.
+	      }catch(Exception e) {
+	         e.printStackTrace();
+	      }
+	      
+		return "file/upload";
+		
+	}
+	
+	
 	/*
 	 * 파일 업로드 요청 처리
 	 * title이라는 파라미터 명으로 제목(파일의 설명)

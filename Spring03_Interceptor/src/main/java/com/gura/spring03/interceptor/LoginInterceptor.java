@@ -16,11 +16,11 @@ public class LoginInterceptor implements HandlerInterceptor{
 	   @Override
 	   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 	         throws Exception {
-	      //세션 객체의 참조값을 얻어와서 
-	      HttpSession session=request.getSession();
-	      String id=(String)session.getAttribute("id");
-	      //만일 로그인을 하지 않았다면
-	      if(id == null) {
+		      //세션 객체의 참조값을 얻어와서 -> 세션 영억에 저장된 값을 보고 로그인 유무를 알기 위해서
+		      HttpSession session=request.getSession();
+		      String id=(String)session.getAttribute("id");
+		      //만일 로그인을 하지 않았다면
+		      if(id == null) {
 	         //로그인 페이지로 리다일렉트 이동 시키고 false 를 리턴한다.
 
 	         //원래 가려던 url 정보 읽어오기
