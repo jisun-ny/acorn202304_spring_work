@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="users">
+	<insert id="insert" parameterType="usersDto">
+		INSERT INTO users
+		(id, pwd, email, regdate)
+		VALUES(#{id}, #{pwd}, #{email}, SYSDATE)
+		<!-- #{dto의 필드명}을 똑같이 적어놓음녀 알아서 바인딩이 된다 - MyBatis 특징 -->
+	</insert>
+	
+	<select id="getData" parameterType="java.lang.String" resultType="UsersDto">
+		SELECT id, pwd, profile, email, regdate
+		FROM users
+		WHERE id = #{id}
+	</select>
+	<!-- select된 row하나를 어디에 넣을건지 -> UsersDto에 담아서 이 메소드를 호출한 위치로 리턴해줌
+	select one!!인 경우~  -->
+	
+	<update id="updatePwd" parameterType="UsersDto">
+		UPDATE users
+		SET pwd = #{newPwd}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="update" parameterType="UsersDto">
+		UPDATE users
+		SET email = #{Email}, profile = #{Profile}
+		where id = #{id}
+	</update>
+			
+	<delete id="delete" parameterType="string"> <!-- java.lang.String을 줄여서 string이라고 씀 -->
+		DELETE FROM users
+		where id = #{id}
+	</delete>
+</mapper>
