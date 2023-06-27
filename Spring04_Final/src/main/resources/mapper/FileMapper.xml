@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="file">
+   <insert id="insert" parameterType="fileDto">
+      INSERT INTO board_file
+      (num, writer, title, orgFileName, saveFileName, fileSize, regdate)
+      VALUES(board_file_seq.NEXTVAL, #{writer}, #{title}, 
+         #{orgFileName}, #{saveFileName}, #{fileSize}, SYSDATE)
+   </insert>
+   <select id="getData" parameterType="int" resultType="fileDto">
+      SELECT num,writer,title,orgFileName,saveFileName,fileSize,regdate
+      FROM board_file
+      WHERE num=#{num}
+   </select>
+   <delete id="delete" parameterType="int">
+      DELETE FROM board_file
+      WHERE num=#{num}
+   </delete>
+   <select id="getList" parameterType="fileDto" 
+      resultType="fileDto"> 
+      <!-- 검색키워드에 맞는 리스트 가져오기 -->
+      <!--
+	   ctrl + space 눌러보면 bind, include,...등등 뭐가 많음. 이런것들을 잘 구성하면   (myBatis의 동적 sql을 구현하는 기능)
+	       조건에 따라서 insert, update, delete문을 변화 시켜 동적 sql문이 가능하다.(select 문도!) 
+	  -->
+      SELECT *
+      FROM
+         (SELECT result1.*, ROWNUM AS rnum
+         FROM
+            (SELECT num,writer,title,orgFileName,saveFileName,
+               fileSize,regdate
+            FROM board_file
+            <choose>
+	      <when test="title != null and orgFileName != null">
+	      	WHERE title LIKE '%'||#{title}||'%' OR orgFileName LIKE '%'||#{orgFileName}||'%'
+	      	<!--  dto에 %를 담아오긴 좀 애매하고.. 어떻게 하면 '%gura%'를 얻어올 수 있을까?
+	      			#{title}, title이라는 필드 안에 gura라는 값일 저장해놓고 
+	      			오라클에서 문자 연결 연산자 ||사용하자
+	      			 -->
+	      </when>
+	      <when test="title != null">
+	      WHERE title LIKE '%'||#{title}||'%'
+	      </when>
+	      <when test="writer != null">
+	       WHERE writer LIKE '%'||#{writer}||'%'
+	      </when>
+      </choose>            
+            ORDER BY num DESC) result1)
+      WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
+      <!-- 페이징 처리떄문에 좀 길어진것임... -->
+   </select>
+   <select id="getCount" parameterType="fileDto" resultType="int">
+   												//셀렉트 될 row를 담을 타입 --> rownum중에 가장 큰거 
+    <!-- 검색키워드에 맞는 갯수 가져오기 -->
+      SELECT NVL(MAX(ROWNUM), 0) //rownum중에서 가장 큰 것(즉 행의 갯수), null이라면 0기본값을 갖게하기 위해  NVL이라는 함수 사용)
+      FROM board_file
+      <choose>
+	      <when test="title != null and orgFileName != null">
+	      	WHERE title LIKE '%'||#{title}||'%' OR orgFileName LIKE '%'||#{orgFileName}||'%'
+	      	<!--  dto에 %를 담아오긴 좀 애매하고.. 어떻게 하면 '%gura%'를 얻어올 수 있을까?
+	      			#{title}, title이라는 필드 안에 gura라는 값일 저장해놓고 
+	      			오라클에서 문자 연결 연산자 ||사용하자
+	      			 -->
+	      </when>
+	      <when test="title != null">
+	      WHERE title LIKE '%'||#{title}||'%'
+	      </when>
+	      <when test="writer != null">
+	       WHERE writer LIKE '%'||#{writer}||'%'
+	      </when>
+      </choose>
+      
+      <!--  
+      	[검색창 만들기 위해서는 이런 조건 구문이 있어야함.]
+	      WHERE title LIKE xxx OR orgFileName LIKE xxx //제목과 파일명 검색
+	      WHERE title LIKE xxx //제목 검색
+	      WHERE writer LIKE xxx //작성자 검색
+	      //아래의 where절이 없을 수도 있고 있따면 3개중 하나가 들어가야한다.
+	      //이 검색 키워드를 fileDto에 담아서 올 것임!
+      -->
+   </select>
+</mapper>

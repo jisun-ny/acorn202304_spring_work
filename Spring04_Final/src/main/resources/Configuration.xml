@@ -7,12 +7,15 @@
   	<typeAliases>
   		<typeAlias type="com.gura.spring04.users.dto.UsersDto" alias="usersDto"/>
   	</typeAliases>
+  	<typeAliases>
+  		<typeAlias type="com.gura.spring04.users.dto.FileDto" alias="fileDto"/>
+  	</typeAliases>
   
   <!-- sql문을 작성한 Mapper xml 문서가 어디에 있는지 목록을 작성해야한다. -->
   	<mappers>
   	
   		<mapper resource="mapper/UsersMapper.xml"/>
-  								
+  		<mapper resource="mapper/FileMapper.xml"/>					
   		
   	</mappers>
   	

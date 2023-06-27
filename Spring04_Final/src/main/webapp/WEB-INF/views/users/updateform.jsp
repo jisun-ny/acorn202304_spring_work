@@ -52,6 +52,7 @@
 		</form>	
 		
 		<form id="imageForm" action="${pageContext.request.contextPath}/users/profile_upload" method="post" enctype="multipart/form-data">
+		<!-- servlet-context에  Multipart 폼 전송 처리를 위한 bean 설정 해줘야함. -->
 			프로필 사진
 			<input type="file" id="image" name="image" accept=".jpg, .png, .gif"/>
 			<button type="submit">업로드</button>
@@ -59,7 +60,7 @@
 					
 	</div>
 	<!-- gura_util.js 로딩 -->
-	<script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script> <!-- webapp -> resorces폴더 -> js폴더 -> gura_util.js -->
 	<script>
 
 		//프로필 이미지 링크를 클릭하면 
