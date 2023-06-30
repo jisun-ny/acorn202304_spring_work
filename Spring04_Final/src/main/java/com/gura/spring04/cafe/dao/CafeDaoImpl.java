@@ -22,8 +22,7 @@ public class CafeDaoImpl implements CafeDao {
 
 	@Override
 	public int getCount(CafeDto dto) {
-		return 0;
-
+		return session.selectOne("cafe.getCount", dto);
 	}
 
 	@Override
@@ -35,18 +34,19 @@ public class CafeDaoImpl implements CafeDao {
 	@Override
 	public CafeDto getData(int num) {
 
-		return session.selectOne("file.getData", num);
+		return session.selectOne("cafe.getData", num);
 	}
 
 	@Override
 	public CafeDto getData(CafeDto dto) {
 
-		return session.selectOne("file.getData", dto);
+		return session.selectOne("cafe.getData2", dto);
+		//검색어가 있는경우에 이전글, 다음글 가져오기
 	}
 
 	@Override
 	public void addViewCount(int num) {
-
+		session.update("cafe.addViewCount", num);
 	}
 
 	@Override

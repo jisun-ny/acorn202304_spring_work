@@ -8,6 +8,7 @@
 <title>/home.jsp</title>
 </head>
 <body>
+	<h1>jsp로 만들었던 cafe기능 스프링으로 만들어보기!!</h1>
 	<div class="container">
 		<c:choose>
 			<c:when test="${empty sessionScope.id }">
