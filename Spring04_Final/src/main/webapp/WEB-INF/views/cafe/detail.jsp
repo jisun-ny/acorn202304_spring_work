@@ -105,12 +105,22 @@ keyframes rotateAni { 0%{
 }
 100%{
 transform
+
+
 :
+
  
+
 rotate
-(360deg);
+
+
+(360
+deg
+);
+
 
       
+
 }
 }
 </style>
@@ -139,7 +149,8 @@ rotate
 			</p>
 		</c:if>
 		<h3>글 상세 보기</h3>
-		<table class="table table-bordered">
+		<table
+			class="table table-bordered animate__animated animate__bounceInDown">
 			<tr>
 				<th>글번호</th>
 				<td>${dto.num }</td>
@@ -274,16 +285,16 @@ rotate
 			<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
 				fill="currentColor" class="bi bi-arrow-clockwise"
 				viewBox="0 0 16 16">
-              <path fill-rule="evenodd"
+				  <path fill-rule="evenodd"
 					d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-              <path
+				  <path
 					d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-         </svg>
+			</svg>
 		</div>
 	</div>
-
 	<script
 		src="${pageContext.request.contextPath}/resources/js/gura_util.js"></script>
+		
 	<script>
       
       //클라이언트가 로그인 했는지 여부
@@ -364,7 +375,7 @@ rotate
                //로딩이 끝났다고 표시한다.
                isLoading=false;
                //새로 추가된 댓글 li 요소 안에 있는 a 요소를 찾아서 이벤트 리스너 등록 하기 
-               addUpdateListener(".page-"+currentPage+" .update-link");
+               addUpdateListener(".page-"+currentPage+" .update-link"); // 만일 2페이지라면 선택자는 ".page-2 .update-link" 이렇게 생성된다.
                addDeleteListener(".page-"+currentPage+" .delete-link");
                addReplyListener(".page-"+currentPage+" .reply-link");
                //새로 추가된 댓글 li 요소 안에 있는 댓글 수정폼에 이벤트 리스너 등록하기
@@ -382,9 +393,10 @@ rotate
          // sel 은  ".page-xxx  .update-link" 형식의 내용이다 
          let updateLinks=document.querySelectorAll(sel);
          for(let i=0; i<updateLinks.length; i++){
-            updateLinks[i].addEventListener("click", function(){
+            updateLinks[i].addEventListener("click", function(e){
                //click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
-               const num=this.getAttribute("data-num"); //댓글의 글번호
+               const num=this.getAttribute("data-num"); //댓글의 글번호 활용
+               //숨겨진 댓글 수정 폼을 보이도록 한다.
                document.querySelector("#updateForm"+num).style.display="block";
                
             });

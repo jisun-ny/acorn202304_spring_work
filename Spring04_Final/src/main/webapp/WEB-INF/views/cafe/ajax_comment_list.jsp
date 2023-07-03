@@ -8,10 +8,11 @@
 						</c:when>
 						<c:otherwise>
 							<c:if test="${tmp.num eq tmp.comment_group }">
-								<li id="reli${tmp.num }">
+								<li id="reli${tmp.num }" class="page-${pageNum }">
 							</c:if>
 							<c:if test="${tmp.num ne tmp.comment_group }">
-								<li id="reli${tmp.num }" style="padding-left: 50px;"><svg
+							<li id="reli${tmp.num }" class="page-${pageNum }"  style="padding-left:50px;">
+							<svg
 										class="reply-icon" xmlns="http://www.w3.org/2000/svg"
 										width="16" height="16" fill="currentColor"
 										class="bi bi-arrow-return-right" viewBox="0 0 16 16">
@@ -55,7 +56,7 @@
 							<form id="reForm${tmp.num }"
 								class="animate__animated comment-form re-insert-form"
 								action="comment_insert" method="post">
-								<input type="hidden" name="ref_group" value="${dto.num }" /> <input
+									<input type="hidden" name="ref_group" value="${num }"/> <input
 									type="hidden" name="target_id" value="${tmp.writer }" /> <input
 									type="hidden" name="comment_group"
 									value="${tmp.comment_group }" />
