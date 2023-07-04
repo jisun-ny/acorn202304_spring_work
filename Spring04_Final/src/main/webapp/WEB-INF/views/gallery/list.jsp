@@ -22,6 +22,7 @@
 	.img-wrapper:hover {
 		/* 원본 크기의 1.1 배로 확대 시키기*/
 		transform: scale(1.1);
+		/* transition이 있기 때문에 0.3초동안 천천히 적용된다.*/
 	}
 	
 	.card .card-text {
@@ -42,14 +43,14 @@
 	            fill - 부모의 크기에 딱 맞게, 비율 관계 없이 맞춘다.(이미지가 일그러질 수 있다.)
 	            scale-down - 가로, 세로 중에 큰 것을 부모의 크기에 맞춘 상태까지만 커지거나 작아지고, 비율은 일정하다.
 	         */
-		object-fit: cover;
+		object-fit: contain;
 	}
 </style>
 </head>
 <body>
 	<div class="container">
-		<a href="${pageContext.request.contextPath}/gallery/upload_form">사진
-			업로드 하러 가기</a>
+		<a href="${pageContext.request.contextPath}/gallery/upload_form">사진 업로드 하러 가기</a>
+		<a href="${pageContext.request.contextPath}/gallery/upload_form2">사진 업로드 하러 가기2</a>
 		<h1>겔러리 목록 입니다.</h1>
 		<div class="row">
 			<c:forEach var="tmp" items="${list }"> <!-- list = List<GalleryDto> // tmp = galleryDto-->

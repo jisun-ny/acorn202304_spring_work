@@ -3,38 +3,40 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="gallery">
-
-<!-- ***** -->
-	<select id="getList" parameterType="galleryDto" resultType="galleryDto">
-		SELECT num, writer, caption, imagePath, regdate
-		FROM board_gallery
-	</select>
-<!-- ***** -->
-	<select id="getCount">
-	
-	</select>
-	
-	<insert id="insert" parameterType="galleryDto">
-	INSERT INTO board_gallery
-	num, writer, caption, imagePath, regdate
-	VALUES (board_gallery_seq.NEXTVAL, #{writer}, #{caption}, #{imagePath}, SYSDATE)
-	</insert>
-	
-	<select id="getData">
-	
-	</select>
-	
-	<delete id="delete" parameterType="int">
-	DELETE FROM board_gallery
-	WHERE num = #{num}
-	</delete>
-	
-	<update id="update" parameterType="galleryDto">
-		UPDATE board_gallery
-		SET caption = #{caption}, imagePath = #{imagePath}
-		where num = #{num}
-	</update>
-	
-	
-
+   <select id="getList" parameterType="galleryDto" resultType="galleryDto">
+      SELECT *
+      FROM   
+         (SELECT result1.*, ROWNUM as rnum
+         FROM
+            (SELECT num, writer, caption, imagePath, regdate
+            FROM board_gallery
+            ORDER BY num DESC) result1)
+      WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
+      <!-- 검색기능은 없음 -->
+      <!-- galleryDto에다가 startRowNum,endRowNum을 가져와서 원하는 페이지의 리스트를 받음-->
+      <!-- 선택된 하나의 row는 다시 dto에 담음 -->
+      <!-- session.selectList("gallery.getList", dto) -->
+     
+   </select>
+   <select id="getCount" resultType="int">
+      SELECT NVL(MAX(ROWNUM), 0) <!-- rownum 중에서 가장큰게 필요 -->
+      FROM board_gallery
+   </select>
+   <insert id="insert" parameterType="galleryDto">
+      INSERT INTO board_gallery
+      (num, writer, caption, imagePath, regdate)
+      VALUES(board_gallery_seq.NEXTVAL, #{writer}, #{caption}, #{imagePath}, SYSDATE)
+      													<!-- imagePath는 resources/upload/xxx.jpg 이런형태 -->
+   </insert>
+   <select id="getData" parameterType="int" resultType="galleryDto">
+      SELECT *
+      FROM
+         (SELECT num, writer, caption, imagePath, regdate, 
+            LAG(num, 1, 0) OVER (ORDER BY num DESC) AS prevNum, <!-- Dto의 필드명과 일치시켜야함 -->
+            LEAD(num, 1, 0) OVER (ORDER BY num DESC) AS nextNum
+            <!-- select된 row하나는 galleryDto에 담을 수 있다. -->
+         FROM board_gallery
+         ORDER BY num DESC)
+      WHERE num = #{num}
+   </select>
 </mapper>

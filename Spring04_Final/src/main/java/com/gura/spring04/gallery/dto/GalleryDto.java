@@ -1,15 +1,28 @@
 package com.gura.spring04.gallery.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class GalleryDto {
 
+	//table column
 	private int num;
 	private String writer;
 	private String caption;
 	private String imagePath;
 	private String regdate;
+	//페이징 처리
+	private int startRowNum;
+	private int endRowNum;
+	//다음글/이전글
+	private int prevNum; //이전 글의 글번호
+	private int nextNum; //다음 글의 글번호
+	//
+	private MultipartFile image; //이미지 파일 업로드 처리를 위한 필드
 	
-	private int startPageNum;
-	private int endPageNum;
+	/*폼 만들때
+	인풋 name="caption">
+	인풋 name="image"할 거기 떄문에
+	*/
 	
 	public GalleryDto () {}
 
@@ -53,22 +66,47 @@ public class GalleryDto {
 		this.regdate = regdate;
 	}
 
-	public int getStartPageNum() {
-		return startPageNum;
+	public int getStartRowNum() {
+		return startRowNum;
 	}
 
-	public void setStartPageNum(int startPageNum) {
-		this.startPageNum = startPageNum;
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
 	}
 
-	public int getEndPageNum() {
-		return endPageNum;
+	public int getEndRowNum() {
+		return endRowNum;
 	}
 
-	public void setEndPageNum(int endPageNum) {
-		this.endPageNum = endPageNum;
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
 	}
 
+	public int getPrevNum() {
+		return prevNum;
+	}
+
+	public void setPrevNum(int prevNum) {
+		this.prevNum = prevNum;
+	}
+
+	public int getNextNum() {
+		return nextNum;
+	}
+
+	public void setNextNum(int nextNum) {
+		this.nextNum = nextNum;
+	}
+
+	public MultipartFile getImage() {
+		return image;
+	}
+
+	public void setImage(MultipartFile image) {
+		this.image = image;
+	}
+
+	
 	
 	
 	
