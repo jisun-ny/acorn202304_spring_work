@@ -12,13 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gura.spring04.users.dao.UsersDao;
 import com.gura.spring04.users.dto.UsersDto;
 
-@Repository
+@Service
 public class UsersServiceImpl implements UsersService {
 	
 	//보통 service는 dao에 의존함.
@@ -31,9 +32,9 @@ public class UsersServiceImpl implements UsersService {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); //비밀번호 암호화
 		//암호화 된 비밀번호를 얻어내서
 		String encodedPwd = encoder.encode(dto.getPwd());//CharSequence는 String type을 구현한 것. 스트링 타입을 넣어주면 됨.
-		//UserDto 객체에 다시 담고
+		//UsersDto 객체에 다시 담고
 		dto.setPwd(encodedPwd);
-		//UserDao객체를 이용해서 DB에 다시 저장
+		//UsersDao객체를 이용해서 DB에 다시 저장
 		dao.insert(dto);
 	}
 

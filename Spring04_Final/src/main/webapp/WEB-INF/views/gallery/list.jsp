@@ -18,6 +18,18 @@
 		/* transform 을 적용할대 0.3s 동안 순차적으로 적용하기 */
 		transition: transform 0.3s ease-out;
 	}
+	
+	/* 화면의 폭이 575px 이하일 때 적용할 css */
+	@media(max-width: 576px) {
+		.img-wrapper{
+			height: 400px;
+		}
+	}
+	/*
+		만일 폭이 500px이라면 높이는 400px이 된다.
+		왜? 선택자의 가중치가 똑같을 경우 나중에 정의된 것이 적용된다.
+	*/
+	
 	/* .img-wrapper 에 마우스가 hover 되었을때 적용할 css */
 	.img-wrapper:hover {
 		/* 원본 크기의 1.1 배로 확대 시키기*/
@@ -51,10 +63,11 @@
 	<div class="container">
 		<a href="${pageContext.request.contextPath}/gallery/upload_form">사진 업로드 하러 가기</a>
 		<a href="${pageContext.request.contextPath}/gallery/upload_form2">사진 업로드 하러 가기2</a>
+		<a href="${pageContext.request.contextPath}/gallery/upload_form3">ajax로 사진 업로드 하러 가기3</a>
 		<h1>겔러리 목록 입니다.</h1>
 		<div class="row">
 			<c:forEach var="tmp" items="${list }"> <!-- list = List<GalleryDto> // tmp = galleryDto-->
-				<div class="col-6 col-md-4 col-lg-3">
+				<div class="col-sm-6 col-md-4 col-lg-3">
 				<!-- row에다가 column여러개를 한번에 출력할것임.  -->
 					<div class="card mb-3">
 						<a
