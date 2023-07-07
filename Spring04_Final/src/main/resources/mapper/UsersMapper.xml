@@ -26,7 +26,7 @@
 	
 	<update id="update" parameterType="UsersDto">
 		UPDATE users
-		SET email = #{Email}, profile = #{Profile}
+		SET email = #{email}, profile = #{profile}
 		where id = #{id}
 	</update>
 			
