@@ -32,7 +32,7 @@ public class Boot02AopApplication {
 		
 		
 		
-		//이렇게 빈 설정을 해서 사용할 수도 있지만( 이전 예제들 )
+		//이렇게 빈 설정을 해서 사용할 수도 있지만( 이전 방식 )
 		/*
 		WritingUtil util = new WritingUtil(); 
 			util.writeLetter();

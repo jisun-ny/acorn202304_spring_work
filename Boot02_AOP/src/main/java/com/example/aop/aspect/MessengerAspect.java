@@ -54,7 +54,7 @@ public class MessengerAspect {
 	
 	@Around("execution(String com.example.aop.util.*.get*())")
 	public Object checkReturn(ProceedingJoinPoint joinPoint) throws Throwable{
-		//aspect가 적용된 메솓를 수행하고 리턴되는 데이터 받아오기
+		//aspect가 적용된 메드를 수행하고 리턴되는 데이터 받아오기
 		Object obj = joinPoint.proceed();
 		//원래 타입으로 casting해서 조사해 볼 수 있음
 		String a = (String)obj;

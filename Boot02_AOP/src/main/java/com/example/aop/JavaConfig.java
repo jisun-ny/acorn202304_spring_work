@@ -24,10 +24,10 @@ public class JavaConfig {
 		}
 		
 		//MemberService 객체를 bean 만들기
-				@Bean
-				public MemberService memberService() {
-					return new MemberService();
-				}
+		@Bean
+		public MemberService memberService() {
+			return new MemberService();
+		}
 		
 	
 }

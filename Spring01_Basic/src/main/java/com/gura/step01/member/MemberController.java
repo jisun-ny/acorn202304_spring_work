@@ -38,7 +38,7 @@ public class MemberController {
 		request.setCharacterEncoding("utf-8"); //인코딩 필터로 설정하자!
 		int num = Integer.parseInt(request.getParameter("num"));
 		String name = request.getParameter("name");
-		String addr = request.getParameter("adr");
+		String addr = request.getParameter("addr");
 		
 		System.out.println(num+"|"+name+"|"+addr);
 		return "member/insert";	

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
  *    -Aspectj Expression @before( 여기에 작성하는 문법 )
  * //return type: * 
  * //메소드의 모양: * 
+ * 
  *    1. execution(* *(..)) => 접근 가능한 모든 메소드가 
  *       point cut
  *    2. execution(* test.service.*.*(..)) 
