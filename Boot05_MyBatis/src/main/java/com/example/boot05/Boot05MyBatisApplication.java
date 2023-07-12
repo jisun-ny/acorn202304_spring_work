@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Boot05MyBatisApplication {
 
 	public static void main(String[] args) {
+		//run하면 main 메소드가 스프링부트를 실행시켜줌
 		SpringApplication.run(Boot05MyBatisApplication.class, args);
 		
 		//크롬을 실행해서 로딩시킴
