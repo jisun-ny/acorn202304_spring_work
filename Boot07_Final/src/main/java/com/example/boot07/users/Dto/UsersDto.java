@@ -2,7 +2,7 @@ package com.example.boot07.users.Dto;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("usersDto")
+@Alias("usersDto") //이게 붙어있어야 mapper에서 사용 가능/
 public class UsersDto {
 	//필드
 	private String id;

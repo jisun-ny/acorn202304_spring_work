@@ -74,6 +74,7 @@
 			//ajax 전송할 폼의 참조값 얻어오기
 			const form=document.querySelector("#imageForm");
 			//gura_util.js 에 있는 함수를 이용해서 ajax 전송하기 
+			//사진의 주소 자체가 db에 저장되기떄문에 프로필이미지 경로를 요청하게 되면 db에 저장된 주소의 경로변수를 읽어내서 파일에 접근해서 을 불러오는 그런 구조... 
 			ajaxFormPromise(form)
 			.then(function(response){
 				return response.json();
