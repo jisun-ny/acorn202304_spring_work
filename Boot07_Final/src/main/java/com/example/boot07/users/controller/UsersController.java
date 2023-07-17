@@ -1,4 +1,4 @@
-package com.example.boot07.users.Controller;
+package com.example.boot07.users.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.boot07.users.Dto.UsersDto;
+import com.example.boot07.users.dto.UsersDto;
 import com.example.boot07.users.service.UsersService;
 
 

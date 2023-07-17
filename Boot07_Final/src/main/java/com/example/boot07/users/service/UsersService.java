@@ -8,8 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import com.example.boot07.users.Dto.UsersDto;
+import com.example.boot07.users.dto.UsersDto;
 
 public interface UsersService {
 	

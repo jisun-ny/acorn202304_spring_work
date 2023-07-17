@@ -1,6 +1,6 @@
-package com.example.boot07.users.Dao;
+package com.example.boot07.users.dao;
 
-import com.example.boot07.users.Dto.UsersDto;
+import com.example.boot07.users.dto.UsersDto;
 
 public interface UsersDao {
 

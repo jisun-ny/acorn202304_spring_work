@@ -37,6 +37,13 @@
 			<li><a href="cafe/insertform">카페 글쓰기-스마트 에디터 띄워보기</a></li>
 			<li><a href="file/uploadform">파일 업로드 테스트</a></li>
 		</ul>
+		
+		<form action="member/insert" method = "post">
+			<input type="text" name="num" placeholder="번호 입력..." />
+			<input type="text" name="name" placeholder="이름 입력..." />
+			<input type="text" name="addr" placeholder="주소 입력..." />
+			<button type="submit">추가</button>
+		</form>
 		<h3>공지사항</h3>
 		<ul>
 			<c:forEach var="tmp" items="${noticeList }">

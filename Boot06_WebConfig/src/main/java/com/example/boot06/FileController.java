@@ -42,7 +42,7 @@ public class FileController {
 		// 파일의 이름 정보(웹브라우저가 해당정보를 이용해서 파일을 만들어 준다)
 		headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + encodedName);
 																			//파일의 원래 이름을 전달해준다 -> 웹브라우저가 이 이름을 참고해서 다운로드할때 원본이름으로 다운로드 시켜준다.
-		// 파일의 크기 정보도 담아준다.
+		// 파일의 크기 정보도 담아준다. -- 다 다운받았는지도 알아야하기 때문에
 		headers.setContentLength(fileSize);
 
 		// 읽어들일 파일의 경로 구성
@@ -85,6 +85,7 @@ public class FileController {
 		String saveFileName = UUID.randomUUID().toString(); // 여기선 원본 파일명 더해줄 필요없다
 
 		String filePath = fileLocation + File.separator + saveFileName;
+										//파일클래스에 있는 역슬래쉬를 참조해서 쓰는 이유 -> 파일 구분자는 윈도우에서는 역슬래쉬지만 리눅스에선 슬래쉬기 떄문에 운영체제에 따라서 자동으로 바뀌게 하기 위해서
 		// UUID로 만들어서 저장해놓은 파일 이름
 		try {
 			// 원하는 경로에 파일 저장하기
@@ -94,6 +95,7 @@ public class FileController {
 		}
 
 		// 원래는 DB에 저장해야하지만 테스트를 위해 view 페이지에 전달하기
+		//이 세개의 정보가 있어야지 기본적으로 파일을 저장 시킬 수 있다.
 		model.addAttribute("orgFileName", orgFileName);
 		model.addAttribute("saveFileName", saveFileName);
 		model.addAttribute("fileSize", fileSize);

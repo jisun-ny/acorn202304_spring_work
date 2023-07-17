@@ -26,7 +26,9 @@
 		<ul>
 			<li><a href="file/list">자료실 목록 보기</a></li>
 			<li><a href="${pageContext.request.contextPath }/cafe/list">글 목록보기</a></li>
-			<li><a href="${pageContext.request.contextPath }/gallery/list">갤러리 보기</a></li>
+			<li><a href="${pageContext.request.contextPath }/file/list"> 자료실 목록 보기</a></li>
+			<li><a href="${pageContext.request.contextPath }/gallery/list">갤러리 목록 보기</a></li>
+			
 		</ul>
 		<h2>공지사항</h2>
 		<ul>

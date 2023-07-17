@@ -1,4 +1,4 @@
-package com.example.boot07.users.Dto;
+package com.example.boot07.users.dto;
 
 import org.apache.ibatis.type.Alias;
 

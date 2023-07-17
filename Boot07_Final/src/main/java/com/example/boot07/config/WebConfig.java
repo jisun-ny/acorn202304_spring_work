@@ -38,9 +38,11 @@ public class WebConfig implements WebMvcConfigurer{
 		// -> 즉 .동작 .동작.동작 가능
 		
 		registry.addInterceptor(loginInter)
-			.addPathPatterns("/users/*, /cafe/*") //.addPathPatternsg할 때 String... 으로 문자열을 여러개 전달해도 되고, List<String>으로 전달해도 된다.
+			.addPathPatterns("/users/*, /cafe/*, /file/*, /gallery/*") //.addPathPatternsg할 때 String... 으로 문자열을 여러개 전달해도 되고, List<String>으로 전달해도 된다.
 			.excludePathPatterns("/users/loginform", "/users/login", "/users/signup_form", "/users/signup",
-					"/cafe/list", "/cafe/detail", "/cafe/ajax_comment_list");
+					"/cafe/list", "/cafe/detail", "/cafe/ajax_comment_list",
+					"/file/list", "/file/download",
+					"/gallery/list", "/gallery/detail", "/gallery/images");
 		/*
 		 * excludePathPatterns 메소드는 가변인자를 받도록 설계되어있다.
 		 */

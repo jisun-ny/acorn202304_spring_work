@@ -18,8 +18,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.boot07.users.Dao.UsersDao;
-import com.example.boot07.users.Dto.UsersDto;
+import com.example.boot07.users.dao.UsersDao;
+import com.example.boot07.users.dto.UsersDto;
 
 
 @Service

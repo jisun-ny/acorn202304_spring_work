@@ -1,10 +1,10 @@
-package com.example.boot07.users.Dao;
+package com.example.boot07.users.dao;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.example.boot07.users.Dto.UsersDto;
+import com.example.boot07.users.dto.UsersDto;
 
 @Repository
 public class UsersDaoImpl implements UsersDao{
