@@ -30,7 +30,7 @@ public class ImageController {
 					MediaType.IMAGE_GIF_VALUE}
 			) //경로변수 //이미지 이름은 그때그때 달라질 텐데 이걸 {ImageName}으로 받겠다.(pathvaluable)
 	@ResponseBody
-	public byte[] getImage(@PathVariable("imageName") String imageName) throws IOException { //그리고 imageName에 넣어줌
+	public byte[] getImage(@PathVariable("imageName") String imageName) throws IOException { // @PathVariable: 업로드된 사진 이름 {imagename}을 String imagename으로 받아 온다.
 		//imageName에는 응답해줄 이미지의 이름이 들어있다.
 			
 		//읽어들일 파일 경로

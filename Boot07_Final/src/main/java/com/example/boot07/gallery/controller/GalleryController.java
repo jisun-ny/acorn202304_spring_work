@@ -39,16 +39,16 @@ public class GalleryController {
 	//웹앱에 어디엔가 넣어노면 요청이 가능. 근데이건 이미지가 저장한 곳이 클라이언트가 요청 가능한 경로가 아ㅣ기때문에 따로 응답해주는 컨트롤러 매소드 가필요하다.
 	@GetMapping(
 			value="/gallery/images/{imageName}",
-			produces= {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE,
-					MediaType.IMAGE_GIF_VALUE}
+			produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, 
+						MediaType.IMAGE_GIF_VALUE}
 			)
 	@ResponseBody
-	public byte[] galleryImage(@PathVariable("imageName") String imageName) throws IOException { //그리고 imageName에 넣어줌
-		
-		String absolutePath = fileLocation + File.separator + imageName;
+	public byte[] galleryImage(@PathVariable("imageName") String imageName) throws IOException {
+
+		String absolutePath=fileLocation + File.separator + imageName;
 		//fileLocation 필드에는 파일에 저장되어있는 서버의 파일 시스템상에서의 위치가 들어있다.
 		//파일에서 읽어들일 InputStream
-		InputStream is = new FileInputStream(absolutePath); //FileInputStream에서 빨대를 꽂은다음?? 		
+		InputStream is = new FileInputStream(absolutePath); 		
 		//이미지 데이터(byte)를 읽어서 배열에 담아서 클라이언트에게 응답한다.
 		return IOUtils.toByteArray(is);
 		
@@ -56,7 +56,7 @@ public class GalleryController {
 
 	// gallery 게시글 num이 parameter get방식으로 넘어온다.
 	// detail 페이지
-	@RequestMapping("/gallery/detail")
+	@RequestMapping(value = "/gallery/detail", method = RequestMethod.GET)
 	public ModelAndView detail(ModelAndView mView, int num) {
 		// 갤러리 detail 페이지에 필요한 data를 num으로 가져와 ModelAndView에 저장
 		service.getDetail(mView, num);

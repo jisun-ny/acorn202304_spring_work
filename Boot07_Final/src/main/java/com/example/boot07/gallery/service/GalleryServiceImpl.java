@@ -85,70 +85,43 @@ public class GalleryServiceImpl implements GalleryService{
 
 	@Override
 	public void saveImage(GalleryDto dto, HttpServletRequest request) {
-	      //업로드된 파일의 정보를 가지고 있는 MultipartFile 객체의 참조값을 얻어오기
-	      MultipartFile image = dto.getImage();
-	      //원본 파일명 -> 저장할 파일 이름 만들기위해서 사용됨
-	      String orgFileName = image.getOriginalFilename();
-	      //파일 크기 -> 다운로드가 없으므로, 여기서는 필요 없다.
-	      long fileSize = image.getSize();
-	      
-	    
-	      //저장할 파일명 UUID문자열 + 원본 파일명
-	      String saveFileName = UUID.randomUUID().toString() + orgFileName;
-	      
-	      
-	      //db 에 저장할 저장할 파일의 상세 경로
-	      String filePath = fileLocation + File.separator + saveFileName;
-	      //이미지는 .png, .jpg...등 파일명이 다양하기 때문에 최대한 그걸 유지시키려고 뒤에 saveFileName을 붙여줌
-	      //디렉토리를 만들 파일 객체 생성
-	      File upload = new File(fileLocation);
-	      if(!upload.exists()) {
-	         //만약 디렉토리가 존재하지X
-	         upload.mkdir();//폴더 생성
-	      }
-	     
-	      try {
-	         //upload 폴더에 파일을 저장한다.
-	         image.transferTo(new File(filePath));
-	         System.out.println();   //임시 출력
-	      }catch(Exception e) {
-	         e.printStackTrace();
-	      }
-	      
-	      //dto 에 업로드된 파일의 정보를 담는다.
-	      //-> parameter 로 넘어온 dto 에는 caption, image 가 들어 있었다.
-	      //-> 추가할 것 : writer(id), imagePath 만 추가로 담아주면 된다.
-	      //-> num, regdate : db 에 추가하면서 자동으로 들어감
-	      String id = (String)request.getSession().getAttribute("id");
-	      dto.setWriter(id);
-	      //gallery 는 사진 다운 기능이 없다. -> orgFileName, saveFileName, fileSize 저장할 필요X
-	      //imagePath 만 저장해주면 됨
-	      //dto.setImagePath("/gallery/images/" + saveFileName);
-	      
-	      //DB에는 saveFileName만 저장하고 출력할 때 자세한 경로를 출력해준다.
-	      dto.setImagePath(saveFileName);
-	      
-	      //gallery/list.jsp에서 src="${pageContext.request.contextPath }/gallery/images${tmp.imagePath}" /> 이걸 수정해줘야함.
-	      //detail에도!!
-	      
-	      
-	      //GalleryDao를 잉ㅇ해서 DB에 저장하기
-	      dao.insert(dto);
-	      /*
-	       * 이미지는 사실 C:/acorn202304/upload에 저장되어있지만
-	       * 이렇게 적으면 안됨! 그러면 본인의 컴푸터에서 찾을거아니여..
-	       * <img src ="/gallery/images/abcd1234.png">
-	       * 뒤에 파일 이름만 바꿔서 db에 저장하자
-	       * 디비에 이걸 통채로 저장하기 위해서 dto에다가 넣어준것...  
-	       * users에선 통채로 저장해봤으니까 여기선 파일명만 저장해보자
-	       * 
-	       */
-	      
-	      
-	      
-	      //GalleryDao 를 이용해서 DB 에 저장하기
-	      dao.insert(dto);
-		
+		//업로드된 파일의 정보를 가지고 있는 MultipartFile 객체의 참조값을 얻어오기
+		MultipartFile image = dto.getImage();
+		//원본 파일명 -> 저장할 파일 이름 만들기위해서 사용됨
+		String orgFileName = image.getOriginalFilename();
+		//파일 크기 -> 다운로드가 없으므로, 여기서는 필요 없다.
+		long fileSize = image.getSize();
+
+		//저장할 파일명  uuid 문자열 + 원본 파일명 
+		String saveFileName=UUID.randomUUID().toString()+orgFileName;
+
+		//db 에 저장할 저장할 파일의 상세 경로
+		String filePath = fileLocation + File.separator + saveFileName;
+		//디렉토리를 만들 파일 객체 생성
+		File upload = new File(fileLocation);
+		if(!upload.exists()) {
+			//만약 디렉토리가 존재하지X
+			upload.mkdir();//폴더 생성
+		}
+
+		try {
+			//upload 폴더에 파일을 저장한다.
+			image.transferTo(new File(filePath));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		//dto 에 업로드된 파일의 정보를 담는다.
+		//-> parameer 로 넘어온 dto 에는 caption, image 가 들어 있었다.
+		//-> 추가할 것 : writer(id), imagePath 만 추가로 담아주면 된다.
+		//-> num, regdate : db 에 추가하면서 자동으로 들어감
+		String id = (String)request.getSession().getAttribute("id");
+		dto.setWriter(id);
+		//DB 에는 saveFileName 만 저장하고 출력할때 자세한 경로를 출력해 준다. 
+		dto.setImagePath(saveFileName);
+
+		//GalleryDao 를 이용해서 DB 에 저장하기
+		dao.insert(dto);
 	}
 
 	@Override
